@@ -52,8 +52,8 @@ class Client extends AbstractAPI
                             $bankCode = null, $cityCode = null, $braBankName = null)
     {
         $params = [
-            "oid_partner" => $this->config['instant_pay.oid_partner'],
-            "platform" => $this->config['instant_pay.platform'],
+            "oid_partner" => $this->config['oid_partner'],
+            "platform" => $this->config['platform'],
             "api_version" => $this->production ? '1.1' : '1.0',
             "sign_type" => self::SIGN_TYPE_RSA,
             "no_order" => $noOrder ?: $this->findAvailableNoOrder(),
@@ -64,7 +64,7 @@ class Client extends AbstractAPI
             "info_order" => $infoOrder,
             "flag_card" => $flagCard,
             "memo" => $memo,
-            "notify_url" => $notifyUrl ?: $this->config['instant_pay.notify_url'],
+            "notify_url" => $notifyUrl ?: $this->config['notify_url'],
             "risk_item" => $this->production ? $riskItem : null,
             // 以下是对公打款可选参数
             "bank_name" => $bankName,
@@ -89,13 +89,13 @@ class Client extends AbstractAPI
     public function confirmPayment($noOrder, $confirmCode, $notifyUrl = null)
     {
         $params = [
-            "oid_partner" => $this->config['instant_pay.oid_partner'],
-            "platform" => $this->config['instant_pay.platform'],
+            "oid_partner" => $this->config['oid_partner'],
+            "platform" => $this->config['platform'],
             "api_version" => '1.0',
             "sign_type" => self::SIGN_TYPE_RSA,
             "no_order" => $noOrder,
             "confirm_code" => $confirmCode,
-            "notify_url" => $notifyUrl ?: $this->config['instant_pay.notify_url'],
+            "notify_url" => $notifyUrl ?: $this->config['notify_url'],
         ];
 
         return $this->payload($this->url('paymentapi/confirmPayment.htm'), $params);
@@ -114,10 +114,10 @@ class Client extends AbstractAPI
         }
 
         $params = [
-            "oid_partner" => $this->config['instant_pay.oid_partner'],
+            "oid_partner" => $this->config['oid_partner'],
             "sign_type" => self::SIGN_TYPE_RSA,
             "no_order" => $noOrder,
-            "platform" => $this->config['instant_pay.platform'],
+            "platform" => $this->config['platform'],
             "oid_paybill" => $oidPayBill,
             "api_version" => '1.0',
         ];

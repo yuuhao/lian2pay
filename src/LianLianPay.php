@@ -26,6 +26,7 @@ class LianLianPay extends Container
     protected $providers = [
         Payment\ServiceProvider::class,
         Account\ServiceProvider::class,
+        Common\ServiceProvider::class,
     ];
 
     public function __construct(array $config = array())
@@ -49,7 +50,7 @@ class LianLianPay extends Container
     {
         $config = new Core\Config($config);
 
-        $keys = ['instant_pay.oid_partner', 'instant_pay.private_key', 'instant_pay.public_key', 'instant_pay.ll_public_key'];
+        $keys = ['oid_partner', 'private_key', 'public_key', 'll_public_key'];
         foreach ($keys as $key) {
             !$config->has($key) || $config[$key] = '***' . substr($config[$key], -5);
         }

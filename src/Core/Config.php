@@ -12,7 +12,7 @@ class Config extends Collection
     {
         return <<<s
 -----BEGIN RSA PRIVATE KEY-----
-{$this->get('instant_pay.private_key')}
+{$this->get('private_key')}
 -----END RSA PRIVATE KEY-----
 s;
     }
@@ -21,7 +21,7 @@ s;
     {
         return <<<s
 -----BEGIN PUBLIC KEY-----
-{$this->get('instant_pay.public_key')}
+{$this->get('public_key')}
 -----END PUBLIC KEY-----
 s;
     }
@@ -30,7 +30,7 @@ s;
     {
         return <<<s
 -----BEGIN PUBLIC KEY-----
-{$this->get('instant_pay.ll_public_key')}
+{$this->get('ll_public_key')}
 -----END PUBLIC KEY-----
 s;
     }

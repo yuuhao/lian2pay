@@ -58,7 +58,7 @@ abstract class AbstractAPI
     protected function getBaseUrl(): string
     {
         if (empty($this->baseUrl)) {
-            $this->production = $this->getConfig()->get('instant_pay.production');
+            $this->production = $this->getConfig()->get('production');
             if ($this->production) {
                 $this->baseUrl = 'https://accpapi.lianlianpay.com/v1/';
             } else {
@@ -318,7 +318,7 @@ abstract class AbstractAPI
     protected function buildPayLoadParams(array $params): array
     {
         Log::debug('Build PayLoad Before:', $params);
-        $oidPartner = $this->getConfig()->get('instant_pay.oid_partner');
+        $oidPartner = $this->getConfig()->get('oid_partner');
         $payLoad = LLHelper::encryptPayLoad(json_encode($params), $this->getConfig()->getInstantPayLianLianPublicKey());
         return [
             'oid_partner' => $oidPartner,
