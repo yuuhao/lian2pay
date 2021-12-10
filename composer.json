@@ -2,6 +2,7 @@
     "name": "yoka/lianlianpay",
     "description": "连连支付 SDK for PHP.",
     "type": "library",
+    "license": "MIT",
     "require": {
         "php":">=7.0",
         "ext-openssl": "*",
