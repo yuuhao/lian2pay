@@ -90,4 +90,26 @@ class Client extends AbstractAPI
     {
         return $this->parse($this->url('acctmgr/openacct-verify-enterprise'), $params);
     }
+
+    /**
+     * 文件上传
+     * @param $params
+     * @return \Yoka\LianLianPay\Support\Collection|null
+     * @throws \Yoka\LianLianPay\Exceptions\HttpException
+     */
+    public function upload($params)
+    {
+        return $this->parse($this->url('acctmgr/upload'), $params);
+    }
+
+    /**
+     * 上传照片
+     * @param $params
+     * @return \Yoka\LianLianPay\Support\Collection|null
+     * @throws \Yoka\LianLianPay\Exceptions\HttpException
+     */
+    public function uploadPhotos($params)
+    {
+        return $this->parse($this->url('acctmgr/upload-photos'), $params);
+    }
 }

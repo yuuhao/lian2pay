@@ -276,8 +276,6 @@ class Http
 
         $contents = json_decode($body, true, 512, JSON_BIGINT_AS_STRING);
 
-        Log::debug('API response decoded:', compact('contents'));
-
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw new HttpException('Failed to parse JSON: ' . json_last_error_msg());
         }

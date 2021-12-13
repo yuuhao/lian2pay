@@ -144,9 +144,12 @@ abstract class AbstractAPI
      */
     protected function parse($url, $params, string $method = 'post')
     {
+        // 获取http实例
         $http = $this->getHttp();
 
-        $sign = $this->buildSignatureParams($params);
+        $params = $this->filterNull($params);
+        
+        $sign = $this->buildSignatureDataParams($params);
 
         $contents = $http->parseJSON(call_user_func_array([$http, $method], [$url, $params, $sign]));
 
@@ -290,6 +293,7 @@ abstract class AbstractAPI
     {
         // 排序
         ksort($params);
+        reset($params);
         return urldecode(http_build_query($params));
     }
 
@@ -301,6 +305,27 @@ abstract class AbstractAPI
     {
         $params = $this->filterNull($params);
         $signRaw = $this->httpBuildKSortQuery($params);
+
+        Log::debug('排序数据:', [$signRaw]);
+        //转换为openssl密钥，必须是没有经过pkcs8转换的私钥
+        $res = openssl_get_privatekey($this->getConfig()->getInstantPayPrivateKey());
+        //调用openssl内置签名方法，生成签名$sign
+        openssl_sign($signRaw, $signStr, $res, OPENSSL_ALGO_MD5);
+        //释放资源
+        openssl_free_key($res);
+        //base64编码   sign
+        return base64_encode($signStr);
+    }
+
+    /**
+     * @param array $params
+     * @return string
+     */
+    protected function buildSignatureDataParams(array $params): string
+    {
+        $params = $this->filterNull($params);
+        Log::debug('json数据:', $params);
+        $signRaw = md5(json_encode($params, JSON_UNESCAPED_UNICODE));
         //转换为openssl密钥，必须是没有经过pkcs8转换的私钥
         $res = openssl_get_privatekey($this->getConfig()->getInstantPayPrivateKey());
         //调用openssl内置签名方法，生成签名$sign

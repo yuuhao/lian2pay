@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @property \Yoka\LianLianPay\Payment\Client payment
  * @property \Yoka\LianLianPay\Account\Client account
+ * @property \Yoka\LianLianPay\Common\Client common
  *
  * @package Yoka\LianLianPay
  */
