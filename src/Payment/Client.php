@@ -21,7 +21,7 @@ class Client extends AbstractAPI
      * 生产有效的商户订单号(最好排重)
      * @return string
      */
-    public static function findAvailableNoOrder()
+    public static function findAvailableNoOrder(): string
     {
         return date('YmdHis') . substr(explode(' ', microtime())[0], 2, 6) . rand(1000, 9999);
     }
@@ -56,7 +56,7 @@ class Client extends AbstractAPI
             "platform" => $this->config['platform'],
             "api_version" => $this->production ? '1.1' : '1.0',
             "sign_type" => self::SIGN_TYPE_RSA,
-            "no_order" => $noOrder ?: $this->findAvailableNoOrder(),
+            "no_order" => $noOrder,
             "dt_order" => date('YmdHis'),
             "money_order" => $moneyOrder,
             "card_no" => $cardNo,

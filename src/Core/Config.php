@@ -10,28 +10,28 @@ class Config extends Collection
 {
     public function getInstantPayPrivateKey(): string
     {
-        return <<<s
------BEGIN RSA PRIVATE KEY-----
-{$this->get('private_key')}
------END RSA PRIVATE KEY-----
-s;
+        if (file_exists($this->get('private_key'))) {
+            return file_get_contents($this->get('private_key'));
+        } else {
+            return $this->get('private_key');
+        }
     }
 
     public function getInstantPayPublicKey(): string
     {
-        return <<<s
------BEGIN PUBLIC KEY-----
-{$this->get('public_key')}
------END PUBLIC KEY-----
-s;
+        if (file_exists($this->get('public_key'))) {
+            return file_get_contents($this->get('public_key'));
+        } else {
+            return $this->get('public_key');
+        }
     }
 
     public function getInstantPayLianLianPublicKey(): string
     {
-        return <<<s
------BEGIN PUBLIC KEY-----
-{$this->get('ll_public_key')}
------END PUBLIC KEY-----
-s;
+        if (file_exists($this->get('ll_public_key'))) {
+            return file_get_contents($this->get('ll_public_key'));
+        } else {
+            return $this->get('ll_public_key');
+        }
     }
 }

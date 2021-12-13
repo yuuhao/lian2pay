@@ -47,7 +47,7 @@ abstract class AbstractAPI
      */
     public function __construct(Config $config)
     {
-        $this->timestamp = time();
+        $this->timestamp = date('YmdHis');
         $this->setConfig($config);
     }
 
