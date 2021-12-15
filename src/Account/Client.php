@@ -5,6 +5,8 @@ namespace Yoka\LianLianPay\Account;
 
 
 use Yoka\LianLianPay\Core\AbstractAPI;
+use Yoka\LianLianPay\Exceptions\HttpException;
+use Yoka\LianLianPay\Support\Collection;
 
 class Client extends AbstractAPI
 {
@@ -14,8 +16,8 @@ class Client extends AbstractAPI
      * @param $userId
      * @param $regPhone
      * @param null $timestamp
-     * @return \Yoka\LianLianPay\Support\Collection|null
-     * @throws \Yoka\LianLianPay\Exceptions\HttpException
+     * @return Collection|null
+     * @throws HttpException
      */
     public function phoneVerifyCodeApply($userId, $regPhone, $timestamp = null)
     {
@@ -33,7 +35,7 @@ class Client extends AbstractAPI
      * @param $userId // 用户在商户系统中的唯一编号
      * @param $regPhone // 绑定手机号。用户开户注册绑定手机号
      * @param $verifyCode // 绑定手机号验证码 通过绑定手机验证码申请接口申请发送给用户绑定手机的验证码
-     * @throws \Yoka\LianLianPay\Exceptions\HttpException
+     * @throws HttpException
      */
     public function phoneVerifyCodeVerify($userId, $regPhone, $verifyCode, $timestamp = null)
     {
@@ -51,8 +53,8 @@ class Client extends AbstractAPI
     /**
      * 个人用户开户申请
      * @param $params
-     * @return \Yoka\LianLianPay\Support\Collection|null
-     * @throws \Yoka\LianLianPay\Exceptions\HttpException
+     * @return Collection|null
+     * @throws HttpException
      */
     public function personOpenAcctApply($params)
     {
@@ -72,8 +74,8 @@ class Client extends AbstractAPI
     /**
      * 企业用户开户申请
      * @param $params
-     * @return \Yoka\LianLianPay\Support\Collection|null
-     * @throws \Yoka\LianLianPay\Exceptions\HttpException
+     * @return Collection|null
+     * @throws HttpException
      */
     public function enterpriseOpenAcctApply($params)
     {
@@ -83,8 +85,8 @@ class Client extends AbstractAPI
     /**
      * 企业用户开户验证
      * @param $params
-     * @return \Yoka\LianLianPay\Support\Collection|null
-     * @throws \Yoka\LianLianPay\Exceptions\HttpException
+     * @return Collection|null
+     * @throws HttpException
      */
     public function enterpriseOpenAcctVerify($params)
     {
@@ -94,8 +96,8 @@ class Client extends AbstractAPI
     /**
      * 文件上传
      * @param $params
-     * @return \Yoka\LianLianPay\Support\Collection|null
-     * @throws \Yoka\LianLianPay\Exceptions\HttpException
+     * @return Collection|null
+     * @throws HttpException
      */
     public function upload($params)
     {
@@ -105,11 +107,44 @@ class Client extends AbstractAPI
     /**
      * 上传照片
      * @param $params
-     * @return \Yoka\LianLianPay\Support\Collection|null
-     * @throws \Yoka\LianLianPay\Exceptions\HttpException
+     * @return Collection|null
+     * @throws HttpException
      */
     public function uploadPhotos($params)
     {
         return $this->parse($this->url('acctmgr/upload-photos'), $params);
+    }
+
+    /**
+     * 用户开户申请(页面接入)
+     * @param array $params
+     * @return Collection|null
+     * @throws HttpException
+     */
+    public function openAcctApply(array $params)
+    {
+        return $this->parse($this->url('acctmgr/openacct-apply'), $params);
+    }
+
+    /**
+     * 个人用户信息修改
+     * @param array $params
+     * @return Collection|null
+     * @throws HttpException
+     */
+    public function modifyPersonUserInfo(array $params)
+    {
+        return $this->parse($this->url('acctmgr/modify-userinfo-individual'), $params);
+    }
+
+    /**
+     * 企业用户信息修改
+     * @param array $params
+     * @return Collection|null
+     * @throws HttpException
+     */
+    public function modifyEnterpriseUserInfo(array $params)
+    {
+        return $this->parse($this->url('acctmgr/modify-userinfo-enterprise'), $params);
     }
 }

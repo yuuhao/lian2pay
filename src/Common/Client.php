@@ -5,6 +5,7 @@ namespace Yoka\LianLianPay\Common;
 
 
 use Yoka\LianLianPay\Core\AbstractAPI;
+use Yoka\LianLianPay\Support\Log;
 
 class Client extends AbstractAPI
 {
@@ -32,10 +33,25 @@ class Client extends AbstractAPI
         return $this->parse($this->url('acctmgr/get-random'), $params);
     }
 
-    public function notify(string $payload = null)
+    /**
+     * 异步通知验签
+     * @param string $signatureData
+     * @param string|null $payload
+     * @return bool
+     */
+    public function verifyNotifySignature(string $signatureData, string $payload = null): bool
     {
         $payload = $payload ?: file_get_contents("php://input");
-        $signatureData = $_SERVER['HTTP_SIGNATURE_DATA'];
-        dd(json_decode($payload));
+
+        $pubKey = $this->getConfig()->getInstantPayLianLianPublicKey();
+        $res = openssl_get_publickey($pubKey);
+        // 调用openssl内置方法验签，返回bool值
+        $result = (bool) openssl_verify(md5($payload), base64_decode($signatureData), $res, OPENSSL_ALGO_MD5);
+
+        Log::debug('Verify Signature Result:', compact('signatureData', 'payload'));
+
+        // 释放资源
+        openssl_free_key($res);
+        return $result;
     }
 }

@@ -150,7 +150,6 @@ abstract class AbstractAPI
         $params = $this->filterNull($params);
         
         $sign = $this->buildSignatureDataParams($params);
-
         $contents = $http->parseJSON(call_user_func_array([$http, $method], [$url, $params, $sign]));
 
         if (empty($contents)) {
