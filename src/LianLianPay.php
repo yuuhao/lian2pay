@@ -19,6 +19,11 @@ use Symfony\Component\HttpFoundation\Request;
  * @property \Yoka\LianLianPay\Payment\Client payment
  * @property \Yoka\LianLianPay\Account\Client account
  * @property \Yoka\LianLianPay\Common\Client common
+ * @property \Yoka\LianLianPay\Secured\Client secured
+ * @property \Yoka\LianLianPay\Refund\Client refund
+ * @property \Yoka\LianLianPay\Withdrawal\Client withdrawal
+ * @property \Yoka\LianLianPay\AccManage\Client accManage
+ * @property \Yoka\LianLianPay\Password\Client password
  *
  * @package Yoka\LianLianPay
  */
@@ -28,6 +33,11 @@ class LianLianPay extends Container
         Payment\ServiceProvider::class,
         Account\ServiceProvider::class,
         Common\ServiceProvider::class,
+        Secured\ServiceProvider::class,
+        Refund\ServiceProvider::class,
+        Withdrawal\ServiceProvider::class,
+        Password\ServiceProvider::class,
+        AccManage\ServiceProvider::class,
     ];
 
     public function __construct(array $config = array())

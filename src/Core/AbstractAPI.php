@@ -147,6 +147,11 @@ abstract class AbstractAPI
         // 获取http实例
         $http = $this->getHttp();
 
+        $baseParams = [
+            'timestamp' => $this->timestamp,
+            'oid_partner' => $this->config['oid_partner']
+        ];
+        $params = array_merge($baseParams, $params);
         $params = $this->filterNull($params);
         
         $sign = $this->buildSignatureDataParams($params);
@@ -173,6 +178,8 @@ abstract class AbstractAPI
     protected function payload($url, $params, string $method = 'post')
     {
         $http = $this->getHttp();
+
+        $params = $this->filterNull($params);
 
         $params['sign'] = $this->buildSignatureParams($params);
         $params = $this->buildSignatureParams($params);

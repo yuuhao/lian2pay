@@ -35,8 +35,8 @@ class Client extends AbstractAPI
 
     /**
      * 异步通知验签
-     * @param string $signatureData
-     * @param string|null $payload
+     * @param string $signatureData 签名值
+     * @param string|null $payload 包体
      * @return bool
      */
     public function verifyNotifySignature(string $signatureData, string $payload = null): bool
@@ -53,5 +53,17 @@ class Client extends AbstractAPI
         // 释放资源
         openssl_free_key($res);
         return $result;
+    }
+
+    /**
+     * 交易二次短信验证
+     * https://open.lianlianpay.com/docs/accp/accpstandard/validation-sms.html
+     * @param array $params
+     * @return \Yoka\LianLianPay\Support\Collection|null
+     * @throws \Yoka\LianLianPay\Exceptions\HttpException
+     */
+    public function validationSms(array $params)
+    {
+        return $this->parse($this->url('txn/validation-sms'), $params);
     }
 }
